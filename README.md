@@ -11,7 +11,7 @@ this concept supports the use of multiple applications.
 it's assumed it will be used by standalone client applications that can storage user data in a single file. without application global or overlapped data.
 
 ## project layers architecture
-![layers.png](./readme-assets/layers.png)
+![layers.jpg](./readme-assets/layers.jpg)
 
 ## project folder architecture
 - server;
@@ -41,6 +41,9 @@ it's assumed it will be used by standalone client applications that can storage 
 				- service;
 				- caching (only get_file);
 				- FS_worker;
+
+## Project Roadmap
+![roadmap.jpg](./readme-assets/roadmap.jpg)
 
 ## Development
 1 set .env file:
