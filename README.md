@@ -43,7 +43,9 @@ it's assumed it will be used by standalone client applications that can storage 
 				- FS_worker;
 
 ## Project Roadmap
-<img src="readme-assets/roadmap.jpg" height="600" style="display: flex; margin: auto">
+<p align="center">
+	<img src="readme-assets/roadmap.jpg" height="600">
+</p>
 
 ## Development
 1 set .env file:
