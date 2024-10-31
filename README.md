@@ -43,7 +43,7 @@ it's assumed it will be used by standalone client applications that can storage 
 				- FS_worker;
 
 ## Project Roadmap
-![roadmap.jpg](./readme-assets/roadmap.jpg)
+<img src="readme-assets/roadmap.jpg" height="600" style="display: flex; margin: auto">
 
 ## Development
 1 set .env file:
