@@ -13,7 +13,7 @@ it's assumed it will be used by standalone client applications that can storage 
 ## project layers architecture
 ![layers.jpg](./readme-assets/layers.jpg)
 
-## project auth layers architecture
+## auth module layers architecture
 ![layers.jpg](./readme-assets/auth-layers.jpg)
 
 ## project folder architecture
