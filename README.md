@@ -13,13 +13,13 @@ it's assumed it will be used by standalone client applications that can storage 
 ## project layers architecture
 ![layers.jpg](./readme-assets/layers.jpg)
 
+## project auth layers architecture
+![layers.jpg](./readme-assets/auth-layers.jpg)
+
 ## project folder architecture
 - server;
 	- libs (common tools):
-		- domain (lib is linked by domain zone);
-			- index (export tools);
-			- tools;
-		- index (export tools);
+		- tool;
 	- middleware:
 		- CORS;
 		- DDOS-traffic-analyzer;
@@ -47,7 +47,7 @@ it's assumed it will be used by standalone client applications that can storage 
 	<img src="readme-assets/roadmap.jpg" height="600">
 </p>
 
-## Development
+## Deployment
 1 set .env file:
 ```bash
 cp .env.example .env
@@ -55,17 +55,21 @@ cp .env.example .env
 
 2 change vars in .env for your OS and preferences;
 
-3 to run server (go needed):
+3 init DB for auth module (WIP)
+
+4 set storage.index.json (WIP)
+
+5 to run server (go needed):
 ```bash
 ./run-server.sh
 ```
 
-3 to build server
+5 to build server (go needed):
 ```bash
 ./build-server.sh
 ```
 
-after that you can launch builded binary file:
+after building you can launch the binary file:
 ```bash
 ./build/server
 ```
