@@ -11,10 +11,10 @@ this concept supports the use of multiple applications.
 it's assumed it will be used by standalone client applications that can storage user data in a single file. without application global or overlapped data.
 
 ## project layers architecture
-![layers.jpg](./readme-assets/layers.jpg)
+![layers](./readme-assets/layers.png)
 
 ## auth module layers architecture
-![layers.jpg](./readme-assets/auth-layers.jpg)
+![auth-layers](./readme-assets/auth-layers.jpg)
 
 ## project folder architecture
 - server;
