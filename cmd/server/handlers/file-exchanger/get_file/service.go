@@ -1,4 +1,4 @@
-package route_get_file
+package get_file
 
 func getFileNameByToken(token string) string {
 	// find client session by token and hash his login

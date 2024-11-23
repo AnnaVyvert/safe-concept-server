@@ -1,8 +1,9 @@
-package route_get_file
+package get_file
 
 import (
 	"os"
-	"safe-server/lib"
+
+	lib "github.com/AnnaVyvert/safe-concept-server/cmd/server/common_lib"
 )
 
 func getFileFromFS(fileName string) []byte {

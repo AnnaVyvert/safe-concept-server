@@ -1,8 +1,9 @@
-package route_put_file
+package put_file
 
 import (
 	"os"
-	"safe-server/lib"
+
+	lib "github.com/AnnaVyvert/safe-concept-server/cmd/server/common_lib"
 )
 
 func writeFileOnPath(fsFolderPath string, fileName string, content string) {

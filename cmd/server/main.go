@@ -5,11 +5,14 @@ import (
 	"log"
 	"net/http"
 
-	"safe-server/lib"
-	"safe-server/server/routes"
-
-	"github.com/joho/godotenv"
+	lib "github.com/AnnaVyvert/safe-concept-server/cmd/server/common_lib"
+	"github.com/AnnaVyvert/safe-concept-server/cmd/server/routes"
+	"github.com/AnnaVyvert/safe-concept-server/cmd/server/vars"
 )
+
+func init() {
+	lib.PanicIfError(vars.Load())
+}
 
 func serve() {
 	port := lib.GetEnv("PORT")
@@ -18,13 +21,8 @@ func serve() {
 	log.Fatalln(http.ListenAndServe(addr, nil))
 }
 
-func loadEnvironment() {
-	err := godotenv.Load("../.env")
-	lib.PanicIfError(err)
-}
 
 func main() {
-	loadEnvironment()
 	routes.DefineRoutes()
 	serve()
 }
