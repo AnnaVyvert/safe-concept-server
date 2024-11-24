@@ -22,7 +22,6 @@ func serve() {
 	log.Fatalln(http.ListenAndServe(addr, nil))
 }
 
-
 func main() {
 	routes.DefineRoutes(http.DefaultServeMux)
 	serve()

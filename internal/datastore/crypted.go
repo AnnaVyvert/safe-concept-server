@@ -2,7 +2,7 @@ package datastore
 
 var _ Storage = crypted{}
 
-type crypted struct{
+type crypted struct {
 	inner Storage
 }
 

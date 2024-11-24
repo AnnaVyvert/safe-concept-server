@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/AnnaVyvert/safe-concept-server/cmd/server/routes"
@@ -38,7 +39,7 @@ func TestRoutes(t *testing.T) {
 	}
 
 	file_content := "mock_file_content"
-	
+
 	testCases := []struct {
 		desc     string
 		request  Request
@@ -50,18 +51,18 @@ func TestRoutes(t *testing.T) {
 			expected: Expected{code: http.StatusOK, body: []byte("root")},
 		},
 		{
+			desc: "put_file",
+			request: Request{method: http.MethodPut, url: "/put_file", header: http.Header{
+				http.CanonicalHeaderKey("token"): []string{"todo_token"},
+			}, body: strings.NewReader(file_content)},
+			expected: Expected{code: http.StatusOK, body: nil},
+		},
+		{
 			desc: "get_file",
 			request: Request{method: http.MethodGet, url: "/get_file", header: http.Header{
 				http.CanonicalHeaderKey("token"): []string{"todo_token"},
 			}},
 			expected: Expected{code: http.StatusOK, body: []byte(file_content)},
-		},
-		{
-			desc: "put_file",
-			request: Request{method: http.MethodPut, url: "/put_file", header: http.Header{
-				http.CanonicalHeaderKey("token"): []string{"todo_token"},
-			}},
-			expected: Expected{code: http.StatusOK, body: nil},
 		},
 	}
 	for _, tC := range testCases {
@@ -72,6 +73,7 @@ func TestRoutes(t *testing.T) {
 			t.Log("REQUEST URL:", testServer.URL+request.url)
 
 			req, err := http.NewRequest(request.method, testServer.URL+request.url, request.body)
+			req.Header = request.header
 			assert.NoError(err)
 
 			res, err := http.DefaultClient.Do(req)
