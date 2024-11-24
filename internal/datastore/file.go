@@ -1,6 +1,7 @@
 package datastore
 
 import (
+	"fmt"
 	"os"
 	"path"
 )
@@ -13,7 +14,7 @@ type fileStorage struct {
 
 func NewFileStorage(storageDir string) Storage {
 	if err := os.MkdirAll(storageDir, os.ModePerm); err != nil {
-		panic(err)
+		panic(fmt.Sprintf("can not make dir %q: %q", storageDir, err))
 	}
 	return fileStorage{storageDir: storageDir}
 }

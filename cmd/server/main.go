@@ -5,17 +5,18 @@ import (
 	"log"
 	"net/http"
 
-	lib "github.com/AnnaVyvert/safe-concept-server/cmd/server/common_lib"
 	"github.com/AnnaVyvert/safe-concept-server/cmd/server/routes"
-	"github.com/AnnaVyvert/safe-concept-server/cmd/server/vars"
+	"github.com/AnnaVyvert/safe-concept-server/cmd/server/utils"
 )
 
 func init() {
-	lib.PanicIfError(vars.Load())
+	if err := utils.Load(); err != nil {
+		log.Println(err)
+	}
 }
 
 func serve() {
-	port := lib.GetEnv("PORT")
+	port := utils.GetEnvDefault("PORT", "3000")
 	addr := fmt.Sprintf(":%v", port)
 	fmt.Printf("launching server on %v\n", addr)
 	log.Fatalln(http.ListenAndServe(addr, nil))
@@ -23,6 +24,6 @@ func serve() {
 
 
 func main() {
-	routes.DefineRoutes()
+	routes.DefineRoutes(http.DefaultServeMux)
 	serve()
 }

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/AnnaVyvert/safe-concept-server/cmd/server/guards"
-	"github.com/AnnaVyvert/safe-concept-server/cmd/server/vars"
+	"github.com/AnnaVyvert/safe-concept-server/cmd/server/utils"
 	"github.com/AnnaVyvert/safe-concept-server/internal/datastore"
 )
 
@@ -20,8 +20,8 @@ var _ datastore.Identifier = new(Id)
 type Id string
 
 // Identity implements datastore.Identifier.
-func (i Id) Identity() string {
-	return string(i)
+func (id Id) Identity() string {
+	return string(id)
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -37,7 +37,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	storage := datastore.Crypted(datastore.NewFileStorage(vars.FsFolderPath))
+	storage := datastore.Crypted(datastore.NewFileStorage(utils.FsFolderPath))
 
 	id := Id(getFileNameByToken(clientToken))
 	file, err := storage.Load(id)
@@ -48,9 +48,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", file))
-	if _, err := w.Write(file); err != nil {
+		if _, err := w.Write(file); err != nil {
 		log.Println("can not write file:", err)
 	}
-
-	w.WriteHeader(http.StatusOK)
 }
