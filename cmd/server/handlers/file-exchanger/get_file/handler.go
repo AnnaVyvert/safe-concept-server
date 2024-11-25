@@ -47,7 +47,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", file))
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", id))
 	if _, err := w.Write(file); err != nil {
 		log.Println("can not write file:", err)
 	}
