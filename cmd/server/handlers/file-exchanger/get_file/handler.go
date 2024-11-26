@@ -42,7 +42,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	id := Id(getFileNameByToken(clientToken))
 	file, err := storage.Load(id)
 	if err != nil {
-		// w.Write()
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}
