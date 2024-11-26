@@ -1,4 +1,4 @@
-package lib
+package utils
 
 func PanicIfError(e error) {
 	if e != nil {

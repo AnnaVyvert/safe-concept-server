@@ -1,8 +1,9 @@
-package route_put_file
+package put_file
 
 import (
 	"net/http"
-	"safe-server/guards"
+
+	"github.com/AnnaVyvert/safe-concept-server/cmd/server/guards"
 )
 
 func isRequestHeadersValid(r *http.Request) bool {
@@ -23,7 +24,7 @@ func getFileContentFromRequest(r *http.Request) string {
 	return "mock_file_content"
 }
 
-func PutFileController(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	if !isRequestHeadersValid(r) {
 		w.WriteHeader(http.StatusBadRequest)
 		return

@@ -1,4 +1,4 @@
-package route_put_file
+package put_file
 
 func getFileNameToSave(fileName string) string {
 	// get uuid or hash from fileName
