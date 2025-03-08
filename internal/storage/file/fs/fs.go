@@ -12,13 +12,6 @@ import (
 
 const perm = 0754
 
-func fileDir(id file.FileID) string {
-	return fmt.Sprintf("%d", id.App)
-}
-func filePath(id file.FileID) string {
-	return fmt.Sprintf("%s/%d", fileDir(id), id.User)
-}
-
 var _ file.Storage = fileStorage{}
 
 type fileStorage struct {
@@ -42,6 +35,13 @@ func NewFileStorage(log *slog.Logger, storageDir string) file.Storage {
 		),
 		storageDir: storageDir,
 	}
+}
+
+func fileDir(id file.FileID) string {
+	return fmt.Sprintf("%d", id.App)
+}
+func filePath(id file.FileID) string {
+	return fmt.Sprintf("%s/%d", fileDir(id), id.User)
 }
 
 func (f fileStorage) Load(id file.FileID) (file.Value, error) {
