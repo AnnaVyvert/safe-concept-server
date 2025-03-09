@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/AnnaVyvert/safe-concept-server/internal/config"
-	"github.com/AnnaVyvert/safe-concept-server/internal/http/server/handlers/file"
 	"github.com/AnnaVyvert/safe-concept-server/internal/http/server/middleware"
 	"github.com/AnnaVyvert/safe-concept-server/internal/log/sl"
+	"github.com/AnnaVyvert/safe-concept-server/internal/service/file"
 	fs_storage "github.com/AnnaVyvert/safe-concept-server/internal/storage/file/fs"
 	"github.com/go-chi/chi/v5"
 	_ "github.com/go-chi/render"
@@ -38,6 +38,7 @@ func main() {
 	router := chi.NewRouter()
 	if cfg.Env == "dev" {
 		slog.SetDefault(log)
+		router.Use(chi_middleware.RequestID)
 		router.Use(middleware.WithSlog(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug, AddSource: true}))))
 		router.Use(chi_middleware.Logger)
 	} else {

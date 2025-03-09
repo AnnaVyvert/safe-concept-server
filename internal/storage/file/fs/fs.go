@@ -13,10 +13,10 @@ import (
 const perm = 0754
 
 func fileDir(id file.FileID) string {
-	return fmt.Sprintf("%d", id.App)
+	return fmt.Sprintf("%d/%d", id.User, id.App)
 }
 func filePath(id file.FileID) string {
-	return fmt.Sprintf("%s/%d", fileDir(id), id.User)
+	return fmt.Sprintf("%s/preferences", fileDir(id))
 }
 
 var _ file.Storage = fileStorage{}

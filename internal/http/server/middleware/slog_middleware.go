@@ -18,8 +18,7 @@ var (
 func WithSlog(entry *slog.Logger) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
-			r = r.WithContext(context.WithValue(r.Context(), LogEntryCtxKey, entry))
-			next.ServeHTTP(w, r)
+			next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), LogEntryCtxKey, entry)))
 		}
 		return http.HandlerFunc(fn)
 	}
