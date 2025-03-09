@@ -46,6 +46,7 @@ func main() {
 	}
 	router.Use(chi_middleware.Recoverer)
 
+	// TODO(mxd): Можно хранить app_id в JWT токене
 	router.Route("/app/{app_id}/file", func(r chi.Router) {
 		r.Post("/", file.Create(fileStorage))
 		r.Get("/", file.Get(fileStorage))
