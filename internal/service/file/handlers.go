@@ -137,8 +137,8 @@ func Update(fileStorage file.Storage) http.HandlerFunc {
 
 		userID := 0 // TODO(mxd): Auth middleware
 
-		dataBytes := bytes.NewBuffer(nil)
-		if _, err := parseValue(io.TeeReader(r.Body, dataBytes), nil); err != nil {
+		var dataBytes bytes.Buffer
+		if _, err := parseValue(r.Body, &dataBytes); err != nil {
 			log.Info("invalid body json", sl.Err(err))
 			render.Status(r, http.StatusBadRequest)
 			render.JSON(w, r, FileError("invalid request"))
