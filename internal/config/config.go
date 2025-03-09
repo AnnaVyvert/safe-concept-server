@@ -21,7 +21,7 @@ type Log struct {
 }
 
 type Storage struct {
-	FsFolderPath string `yaml:"fs_folder_path" env:"FS_FOLDER_PATH"`
+	FsFolderPath string `yaml:"fs_folder_path" env:"FS_FOLDER_PATH" env-default:"/var/tmp/www/safe-concept-server"`
 }
 
 type HTTPServer struct {

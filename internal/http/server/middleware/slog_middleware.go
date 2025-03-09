@@ -8,7 +8,7 @@ import (
 	"runtime/debug"
 	"time"
 
-	chi_middleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 var (
@@ -40,9 +40,9 @@ func RequestSlog(log *slog.Logger, requestIDKey string) func(http.Handler) http.
 		log.Info("slog middleware enabled", slog.String("request-id-key", requestIDKey))
 
 		fn := func(w http.ResponseWriter, r *http.Request) {
-			withRequestID := chi_middleware.RequestID
+			withRequestID := middleware.RequestID
 			withSlog := WithSlog(log)
-			withLogger := chi_middleware.RequestLogger(newLogFormatter(log, requestIDKey))
+			withLogger := middleware.RequestLogger(newLogFormatter(log, requestIDKey))
 			withRequestID(
 				withSlog(
 					withLogger(
@@ -111,14 +111,14 @@ func (s *slogEntry) Panic(rvr interface{}, stack []byte) {
 	)
 }
 
-var _ chi_middleware.LogEntry = new(slogEntry)
+var _ middleware.LogEntry = new(slogEntry)
 
 type logFormatter struct {
 	logger       *slog.Logger
 	requestIDKey string
 }
 
-func (l *logFormatter) NewLogEntry(r *http.Request) chi_middleware.LogEntry {
+func (l *logFormatter) NewLogEntry(r *http.Request) middleware.LogEntry {
 	scheme := "http"
 	if r.TLS != nil {
 		scheme = "https"
@@ -128,7 +128,7 @@ func (l *logFormatter) NewLogEntry(r *http.Request) chi_middleware.LogEntry {
 		slog.String("method", r.Method),
 		slog.String("url", fmt.Sprintf("%s://%s%s %s", scheme, r.Host, r.RequestURI, r.Proto)),
 		slog.String("remote_addr", r.RemoteAddr),
-		slog.String(l.requestIDKey, chi_middleware.GetReqID(r.Context())),
+		slog.String(l.requestIDKey, middleware.GetReqID(r.Context())),
 	)
 
 	entry.Info("requested")
@@ -136,9 +136,9 @@ func (l *logFormatter) NewLogEntry(r *http.Request) chi_middleware.LogEntry {
 	return &slogEntry{logger: entry, debug: entry.Enabled(r.Context(), slog.LevelDebug)}
 }
 
-var _ chi_middleware.LogFormatter = new(logFormatter)
+var _ middleware.LogFormatter = new(logFormatter)
 
-func newLogFormatter(log *slog.Logger, requestIDKey string) chi_middleware.LogFormatter {
+func newLogFormatter(log *slog.Logger, requestIDKey string) middleware.LogFormatter {
 	log.Debug("new log formatter", slog.String("request-id-key", requestIDKey))
 	return &logFormatter{
 		logger:       log,

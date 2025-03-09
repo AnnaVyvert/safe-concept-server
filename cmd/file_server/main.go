@@ -6,40 +6,34 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"path"
 	"syscall"
 	"time"
 
+	"github.com/go-chi/chi/v5"
+	chi_middleware "github.com/go-chi/chi/v5/middleware"
+
 	"github.com/AnnaVyvert/safe-concept-server/internal/config"
 	"github.com/AnnaVyvert/safe-concept-server/internal/http/server/middleware"
-	"github.com/AnnaVyvert/safe-concept-server/internal/log/sl"
+	"github.com/AnnaVyvert/safe-concept-server/internal/logs"
+	"github.com/AnnaVyvert/safe-concept-server/internal/logs/sl"
 	"github.com/AnnaVyvert/safe-concept-server/internal/service/file"
-	fs_storage "github.com/AnnaVyvert/safe-concept-server/internal/storage/file/fs"
-	"github.com/go-chi/chi/v5"
-	_ "github.com/go-chi/render"
-
-	chi_middleware "github.com/go-chi/chi/v5/middleware"
+	"github.com/AnnaVyvert/safe-concept-server/internal/storage/file/fs"
 )
 
 func main() {
-	// config
 	var cfg *config.Config = config.MustLoad()
 
-	FsFolderPath := path.Join("/var/tmp/www/", "safe-concept-server")
-
-	// log
-	// FIXME(mxd)
-	log := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}))
+	log := logs.Setup(cfg)
 
 	// storage
-	fileStorage := fs_storage.NewFileStorage(log.With(slog.String("module", "storage")), FsFolderPath)
+	fileStorage := fs.NewFileStorage(log.With(slog.String("module", "storage")), cfg.FsFolderPath)
 
 	// handlers
 	router := chi.NewRouter()
-	if cfg.Env == "dev" {
+	if cfg.Env == "local" {
 		slog.SetDefault(log)
 		router.Use(chi_middleware.RequestID)
-		router.Use(middleware.WithSlog(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug, AddSource: true}))))
+		router.Use(middleware.WithSlog(log))
 		router.Use(chi_middleware.Logger)
 	} else {
 		router.Use(middleware.RequestSlog(log, cfg.Log.RequestIDKey))

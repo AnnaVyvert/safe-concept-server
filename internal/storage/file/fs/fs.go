@@ -6,7 +6,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/AnnaVyvert/safe-concept-server/internal/log/sl"
+	"github.com/AnnaVyvert/safe-concept-server/internal/logs/sl"
 	"github.com/AnnaVyvert/safe-concept-server/internal/storage/file"
 )
 
