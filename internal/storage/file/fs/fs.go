@@ -6,11 +6,18 @@ import (
 	"os"
 	"path"
 
-	"github.com/AnnaVyvert/safe-concept-server/internal/log/sl"
+	"github.com/AnnaVyvert/safe-concept-server/internal/logs/sl"
 	"github.com/AnnaVyvert/safe-concept-server/internal/storage/file"
 )
 
 const perm = 0754
+
+func fileDir(id file.FileID) string {
+	return fmt.Sprintf("%d/%d", id.User, id.App)
+}
+func filePath(id file.FileID) string {
+	return fmt.Sprintf("%s/preferences", fileDir(id))
+}
 
 var _ file.Storage = fileStorage{}
 
@@ -35,13 +42,6 @@ func NewFileStorage(log *slog.Logger, storageDir string) file.Storage {
 		),
 		storageDir: storageDir,
 	}
-}
-
-func fileDir(id file.FileID) string {
-	return fmt.Sprintf("%d", id.App)
-}
-func filePath(id file.FileID) string {
-	return fmt.Sprintf("%s/%d", fileDir(id), id.User)
 }
 
 func (f fileStorage) Load(id file.FileID) (file.Value, error) {

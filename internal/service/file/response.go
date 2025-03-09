@@ -1,8 +1,8 @@
-package response
+package file
 
 type FileResponse struct {
-	Data  string `json:"data,omitempty"`
-	Error string `json:"error,omitempty"`
+	Data  jsonValue `json:"data,omitempty"`
+	Error string    `json:"error,omitempty"`
 }
 
 const (
@@ -13,9 +13,9 @@ const (
 func FileOK() FileResponse {
 	return FileResponse{}
 }
-func FileData(data []byte) FileResponse {
+func FileData(data jsonValue) FileResponse {
 	return FileResponse{
-		Data: string(data),
+		Data: data,
 	}
 }
 
